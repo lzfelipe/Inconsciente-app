@@ -1,0 +1,53 @@
+ <Video source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}   // Can be a URL or a local file.
+                    ref={(ref) => {
+                        this.player = ref
+                    }}                         
+                    controls={true}       
+                    paused={true}      // Store reference
+                    onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                    onError={this.videoError}               // Callback when video cannot be loaded
+                    style={styles.backgroundVideo} />
+
+
+
+                    ///////////////////
+
+
+                      state = {
+    id: ''
+  }
+
+  storeData = async () => {
+    try {
+      console.log('Salvo')
+      await AsyncStorage.setItem('@id', '123')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@id');
+      console.log(value);
+      this.setState({id: value})
+      if(value == null) {
+        this.setState({id: 'Não há dados salvos'})
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
+
+   deleteUserId = async () => {
+    try {
+      await AsyncStorage.removeItem('@id');
+      console.log('removido')
+      this.setState({id: ''})
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
