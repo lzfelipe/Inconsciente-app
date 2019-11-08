@@ -1,2 +1,2 @@
 # Inconsciente-app
-Aplicativo para web-série inconsciente
+Aplicativo para websérie inconsciente
