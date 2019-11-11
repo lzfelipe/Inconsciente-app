@@ -1,66 +1,123 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar} from 'react-native';
 import firebase from 'react-native-firebase';
 import Inicio from './screens/Inicio';
 import RNRestart from 'react-native-restart';
-
+import AsyncStorage from '@react-native-community/async-storage';
+import Loading from './screens/Components/Loading';
 
 
 class App extends Component {
-  
   state = {
     email: '',
     password: '',
     emailRegister: '',
     passwordRegister: '',
     passwordConfirm: '',
-    isAuthenticated: false,
+    isAuthenticated: true,
     catchError: false,
     errMessage: '',
     userEmail: '',
     userUid: '',
     registerToggle: false,
-
+    loading: true,
+    timePassed: true,
   }
 
+  getData = async () => {
+    try {
+      const email = await AsyncStorage.getItem('email')
+      const password = await AsyncStorage.getItem('password')
+      this.setState({ email });
+      this.setState({ password });
+
+      if (email) {
+        await this.login()
+        this.setState({loading: false})
+      } else {
+        this.setState({email: '' });
+        this.setState({password: ''});
+      }
+      
+    } catch(e) {
+      console.log(e)
+    }
+    
+  }
+
+  componentWillMount() {
+    this.setState({loading: true})
+
+    this.getData()
+  }  
+
+  componentDidMount() {
+    setTimeout( () => {
+          this.setTimePassed();
+          this.setState({loading: false});
+      },4500);
+    }
+
+    setTimePassed() {
+      this.setState({timePassed: true});
+      
+   }
+   
   static signOut() {
+    removeData = async () => {
+      try {
+        await AsyncStorage.removeItem('email')
+        await AsyncStorage.removeItem('password')
+      } catch(e) {
+      }
+    }
 
     firebase.auth().signOut()
     .then( () => {
+      removeData();
       RNRestart.Restart();
     })
     .catch((err) => {
+      removeData();
       RNRestart.Restart();
     });
   } 
 
-
-
-
   login = async () => {
-    const {email, password} = this.state;
+    const {email, password} = this.state
 
+    if (email == '') {
+      this.setState({ errMessage: "Preencha suas credenciais" });
+    } 
+    
     if (password == '') {
       this.setState({ errMessage: "Preencha suas credenciais" });
     } 
 
-
-    else if (email == '') {
-      this.setState({ errMessage: "Preencha suas credenciais" });
-    } 
-
-    
     else  {
+      async function storeData() {
+        try {
+          await AsyncStorage.setItem('email', email)
+          await AsyncStorage.setItem('password', password)
+          
+        } catch (e) { 
+          console.log(e)
+        }
+      }
 
       this.setState({ errMessage: "" });
-      
+
       try {
         const user = await firebase.auth()
         .signInWithEmailAndPassword(email, password)
+        
+
         this.setState({ isAuthenticated: true })
         this.setState({ userEmail: user.user.email})
         this.setState({userUid: user.user.uid })
-        console.log(user)                                                                                                                                                                                                                                                                                                
+        
+        await storeData()       
+        this.setState({loading: false})                                                                                                                                                                                                                                                                                       
       }
       catch (err) {
         this.setState({ catchError: true })
@@ -77,9 +134,6 @@ class App extends Component {
         if (this.state.errMessage == 'The password is invalid or the user does not have a password.') {
           this.setState({errMessage: "Senha inválida."})
         } 
-
-             
-        console.log(err)
       }
   }}
 
@@ -126,7 +180,6 @@ class App extends Component {
           if (errCode == 'auth/email-already-in-use') {
             this.setState({errMessage: "Esse email já está em uso."})
           }     
-          console.log(errMessage)
         });
 
 
@@ -137,11 +190,14 @@ class App extends Component {
 
 
   render() {
-
+    if(!this.state.timePassed) {return  <Loading />}
+    else {
     //View Login
     if(this.state.registerToggle == false) {
+     
       if (this.state.isAuthenticated == false) { 
         return <View style={styles.container}>
+            <StatusBar backgroundColor="#2C1446"/>
             <View style={styles.purple}></View>
             <View style={styles.containerErro}>
             <Text style={styles.errorText}> {this.state.errMessage} </Text>
@@ -191,8 +247,9 @@ class App extends Component {
   } 
 
   //View Registro
-  else if (this.state.registerToggle == true) {
+  if (this.state.registerToggle == true) {
     return  <View style={styles.container}>
+       <StatusBar backgroundColor="#2C1446"/>
       <View style={styles.purple}></View>
       
       <View style={styles.containerErro}>
@@ -247,6 +304,7 @@ class App extends Component {
 
     </View>
   }
+}
 }
 }
 

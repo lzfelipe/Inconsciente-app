@@ -1,57 +1,196 @@
 import React, { Component } from "react";
 import { 
     View,
-    ScrollView,
     Text,
-    StyleSheet
+    StyleSheet,
+    SafeAreaView,
+    TextInput,
+    TouchableOpacity,	
 } from "react-native";
-import Video from 'react-native-video';
-const opening = require('../assets/opening.mp4');
+import VideoUnblocked from './Components/VideoUnblocked'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Episodio extends Component {
+    state = {
+        total: 0,
+        Item1Time: '',
+        Item2Time: '',
+        Item3Time: '',
+        loading: false
+    }
+
+    getAllKeys = async () => {
+        let keys = []
+        try {
+          keys = await AsyncStorage.getAllKeys()
+          console.log(keys)
+          //await AsyncStorage.multiRemove(keys)
+          //console.log("remove" + keys)
+
+        } catch(e) {
+          // read key error
+        }
+        // example console.log result:
+        // ['@MyApp_user', '@MyApp_key']
+      }
+
+      getItens = async () => {
+        try {
+          const Item1Time = await AsyncStorage.getItem('Item1Time')
+          const total = await AsyncStorage.getItem('total')
+          console.log("Total: " + total)
+          this.setState({ Item1Time });
+          
+          if(this.state.total == 0) {
+            this.setState({ total });
+          } 
+          else {
+            this.setState({ total: total.length });
+          }
+
+         
+          
+        } catch(e) {
+          console.log(e)
+        }
+        
+      }
+    
+      componentWillMount() {
+        this.getAllKeys()
+        this.getItens();
+      }
+
+      
+
+    checkItem1 = async () => {
+        let {Item1Time, total} = this.state;
+        increment = async () => {
+            await this.setState({ total: this.state.total + 1 })
+            console.log(this.state.total)
+          }
+    
+        async function Store() {
+            try {
+              await this.increment();             
+              await AsyncStorage.setItem('Item1Time', Item1Time)
+              console.log("Salvo Tempo")
+              total += 1;
+              await AsyncStorage.setItem('total', total.toString())
+              console.log("Salvo Total " + total.toString())
+              
+            } catch (e) { 
+              console.log(e)
+            } 
+        }
+
+        if(Item1Time == "11") {
+                await Store()
+               // this.props.navigation.navigate('Enigma')
+
+            }
+        }
+    
+
     render() {
         return (
-                <View style={{alignItems: "center"}}>
-                    <Video source={opening}   // Can be a URL or a local file.
-                    ref={(ref) => {
-                        this.player = ref
-                    }}                                      // Store reference
-                    onBuffer={this.onBuffer}                // Callback when remote video is buffering
-                    onError={this.videoError}               // Callback when video cannot be loaded
-                    style={styles.backgroundVideo} 
-                    controls={true}
-                    paused={true}
-                    resizeMode={"cover"}
+            <SafeAreaView style={styles.container}>
+                <View style={styles.main}>
+                <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#aaa"}}>Você coletou {this.state.total} item(s) de 3 deste episódio!</Text>
+                    <View style={styles.containerContent}>
+                        <Text style={{fontSize: 16, color: '#48cefa'}}>Primeiro item(1:52):</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Min."
+                            value={this.state.Item1Time}
+                            onChangeText={Item1Time => this.setState ({ Item1Time }) }
+                            placeholderTextColor="#fff"
+                            >
+                        </TextInput>
 
-                    />
-                    <ScrollView style={{marginTop: '69%', height: "52%" ,width: '100%', backgroundColor: '#242626'}}>
-                        <Text style={{fontSize: 24, fontWeight: '500', color: 'white', textAlign: 'center'}}>  Naruto Opening 2 | Haruka Kanata (HD) </Text>
-                        <Text style={{fontSize: 14.5, fontWeight: '200', color: 'white', textAlign: 'justify', padding: 10}}> 
-                        O individuo cujo nome "Naruto" em alguns momentos pode ser considerado um pouco rigido, há a possibilidade de a sua pessoa não conhecer esta informação, porém o mesmo igualmente cresceu desprovido da companhia de um responsável legal vulgo pai. Verdade seja dita o individuo desde sempre nunca conheceu nem ao menos um de seus procriadores, nunca obteve ao menos um indivíduo com quem se teve uma relação de amizade em nossa povoação de pequenas proporções. Entretanto este mesmo nunca foi de se derramar em prantos, experimentar cólera ou aborrecimento ou se dar por derrotado, ele sempre preparado e disposto a se mudar para um estado, situação ou condição melhor, ele apenas quer ter respeito pelas qualidades que apresenta, este é o seu sonho e o Naruto daria a sua vida por isso sem permanecer em um estado irresoluto. Meu conhecimento intuitivo é que este fatigou-se de cair em prantos e resolveu tomar uma atitude a respeito.
-                         </Text>
-                    </ScrollView>
-
+                        <View style={{flexDirection: 'column'}}>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={this.checkItem1}>
+                                <Text style={{color: "#fff"}}>-></Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={this.increment}>
+                                <Text style={{color: "#fff"}}>-></Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
+
+                    <View style={styles.containerContent}>
+                        <Text style={{fontSize: 16, color: '#f5a845'}}>Segundo item(3:20):</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Min."
+                            value={this.state.Item2Time}
+                            onChangeText={Item2Time => this.setState ({ Item2Time }) }
+                            placeholderTextColor="#fff"
+                            >
+                        </TextInput>
+
+                        <View style={{flexDirection: 'column'}}>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}}>
+                                <Text style={{color: "#fff"}}>-></Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.containerContent}>
+                        <Text style={{fontSize: 16, color: '#51f542'}}>Terceiro item(4:40):</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Min."
+                            value={this.state.Item3Time}
+                            onChangeText={Item3Time => this.setState ({ Item3Time }) }
+                            placeholderTextColor="#fff"
+                            >
+                        </TextInput>
+
+                        <View style={{flexDirection: 'column'}}>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}}>
+                                <Text style={{color: "#fff"}}>-></Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </View>
+
+            </SafeAreaView>
             
         );
-    }
+    } 
 }
+
 export default Episodio;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
         justifyContent: 'center',
+        paddingHorizontal: 20,
+        backgroundColor: '#242626'
     },
-    backgroundVideo: {
+    main: {
+        flex: 2, 
+        flexDirection: 'column',
+        alignSelf: 'stretch',
+    },
+    containerContent: {
         flex: 1,
-        position: 'absolute',
-        height: 250,
-        width: '100%',
-        top: 0,
-        left: 0,
-        bottom: 20,
-        right: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        backgroundColor: '#242626',
+    },
+    input: {
+        textAlign: 'center',
+        width: 60,
+        borderBottomColor: '#8A66A2',
+        borderBottomWidth: 2,
+        marginBottom: 20,
+        color: '#fff'
       },
 });

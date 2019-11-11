@@ -35,6 +35,9 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+aa.txt
+*.md
+ios
 
 # BUCK
 buck-out/

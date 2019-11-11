@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, StatusBar} from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Perfil from './Perfil';
@@ -7,13 +7,15 @@ import Infos from './Infos';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
+import Enigma from './Enigma'
 import { createStackNavigator } from 'react-navigation-stack';
-
+import Loading from './Components/Loading';
 
 class Inicio extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+             <StatusBar backgroundColor="#242626"/>
             <Image style={{width: 200, height: 60, marginTop: 20}} source={require('../assets/logo.png')} ></Image>
 
               <View style={styles.containerCards}>
@@ -61,13 +63,16 @@ class Inicio extends Component {
     }
 }
 
+let NavToggle = true;
+
 const TabNavigator = createBottomTabNavigator({
     Inicio: {
       screen: createStackNavigator({
         Inicio: { 
-          screen: Inicio,
+          screen: Episodio,
           navigationOptions: () => ({
-            headerShown: false
+            headerShown: false,
+            
           }),
 
         },
@@ -78,22 +83,40 @@ const TabNavigator = createBottomTabNavigator({
           navigationOptions: () => ({
             title: `Naruto`,
             headerTintColor: '#fff',
-            headerStyle: {backgroundColor: '#242626'}
+            headerStyle: {backgroundColor: '#242626'},
+          }),
+        
+        },
+
+        Enigma: { 
+          screen: Enigma,
+          navigationOptions: () => ({
+            headerShown: true,
           }),
         
         }
 
-      },{
-        defaultNavigationOptions: {
-          
+      },
+      {
+        defaultNavigationOptions: ({ navigation }) => {
+          const { routeName } = navigation.state;
+          if (routeName === 'Episodio' || routeName === 'Enigma') {
+            NavToggle = false;
+          } else {
+            NavToggle = true;
+          }
         }
+       
+
       })
     },
     Informações: Infos,
     Perfil: Perfil,
   },
+
   {
     defaultNavigationOptions: ({ navigation }) => ({
+      tabBarVisible: NavToggle,
       tabBarIcon: ({tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Icon;
@@ -105,7 +128,7 @@ const TabNavigator = createBottomTabNavigator({
         } else if (routeName === 'Perfil') {
             iconName = 'md-person';
         }
-
+        
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
     }),
