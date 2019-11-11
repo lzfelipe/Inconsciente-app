@@ -37,7 +37,8 @@ npm-debug.log
 yarn-error.log
 aa.txt
 *.md
-ios
+ios/
+__tests__/
 
 # BUCK
 buck-out/
