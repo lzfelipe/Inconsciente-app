@@ -14,14 +14,14 @@ class App extends Component {
     emailRegister: '',
     passwordRegister: '',
     passwordConfirm: '',
-    isAuthenticated: true,
+    isAuthenticated: false,
     catchError: false,
     errMessage: '',
     userEmail: '',
     userUid: '',
     registerToggle: false,
     loading: true,
-    timePassed: true,
+    timePassed: false,
   }
 
   getData = async () => {
@@ -55,12 +55,11 @@ class App extends Component {
     setTimeout( () => {
           this.setTimePassed();
           this.setState({loading: false});
-      },4500);
+      },1500);
     }
 
     setTimePassed() {
       this.setState({timePassed: true});
-      
    }
    
   static signOut() {

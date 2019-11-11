@@ -7,93 +7,113 @@ import {
     TextInput,
     TouchableOpacity,	
 } from "react-native";
-import VideoUnblocked from './Components/VideoUnblocked'
+import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';
+const storage = new Storage({
+    // maximum capacity, default 1000
+    size: 1000,
+  
+    // Use AsyncStorage for RN apps, or window.localStorage for web apps.
+    // If storageBackend is not set, data will be lost after reload.
+    storageBackend: AsyncStorage, // for web: window.localStorage
+  
+    // expire time, default: 1 day (1000 * 3600 * 24 milliseconds).
+    // can be null, which means never expire.
+    defaultExpires: null,
+  
+    // cache data in the memory. default is true.
+    enableCache: true,
+  });
+
+  global.storage = storage;
+
+
 
 class Episodio extends Component {
     state = {
         total: 0,
         Item1Time: '',
+        Item1Check: false,
         Item2Time: '',
         Item3Time: '',
-        loading: false
+        loading: true
+        
     }
 
-    getAllKeys = async () => {
-        let keys = []
-        try {
-          keys = await AsyncStorage.getAllKeys()
-          console.log(keys)
-          //await AsyncStorage.multiRemove(keys)
-          //console.log("remove" + keys)
-
-        } catch(e) {
-          // read key error
-        }
-        // example console.log result:
-        // ['@MyApp_user', '@MyApp_key']
-      }
-
-      getItens = async () => {
-        try {
-          const Item1Time = await AsyncStorage.getItem('Item1Time')
-          const total = await AsyncStorage.getItem('total')
-          console.log("Total: " + total)
-          this.setState({ Item1Time });
-          
-          if(this.state.total == 0) {
-            this.setState({ total });
-          } 
-          else {
-            this.setState({ total: total.length });
-          }
-
-         
-          
-        } catch(e) {
-          console.log(e)
-        }
-        
-      }
-    
-      componentWillMount() {
-        this.getAllKeys()
-        this.getItens();
-      }
-
-      
-
-    checkItem1 = async () => {
-        let {Item1Time, total} = this.state;
-        increment = async () => {
-            await this.setState({ total: this.state.total + 1 })
-            console.log(this.state.total)
-          }
-    
-        async function Store() {
-            try {
-              await this.increment();             
-              await AsyncStorage.setItem('Item1Time', Item1Time)
-              console.log("Salvo Tempo")
-              total += 1;
-              await AsyncStorage.setItem('total', total.toString())
-              console.log("Salvo Total " + total.toString())
-              
-            } catch (e) { 
-              console.log(e)
-            } 
-        }
-
-        if(Item1Time == "11") {
-                await Store()
-               // this.props.navigation.navigate('Enigma')
-
+checkItem1 = async () => {
+        if (this.state.Item1Time == "1:52" && this.state.Item1Check == false) {
+        {
+        await storage.save({
+            key: 'total', // Note: Do not use underscore("_") in key!
+            data: {
+                total: this.state.total += 1,
+                Item1Time: this.state.Item1Time,
+                Item1Check: true
             }
+        })
+
+        await storage.load({
+            key: 'total'
+        }).then(ret => {
+            this.setState({total: ret.total})
+            this.setState({Item1Time: ret.Item1Time})
+            this.setState({Item1Check: ret.Item1Check})
+            console.log(ret.Item1Check)
+        })
+        
+        this.props.navigation.navigate('Enigma')
         }
-    
+    }
+    else if (this.state.Item1Time == "1:52" && this.state.Item1Check == true) {
+        this.props.navigation.navigate('Enigma')
+    }
+
+}
+
+checkAndSend() {
+    this.checkItem1();
+    this.forceUpdate();
+}
+
+componentWillMount() {
+ getItem1 = async () => {
+    await storage.load({
+        key: 'total',
+    })
+    .then(ret => {
+        this.setState({total: ret.total})
+        this.setState({Item1Time: ret.Item1Time})
+        this.setState({Item1Check: ret.Item1Check})
+        console.log(ret.total)
+    })
+    .catch(err => {
+        console.log(err.message);
+
+        switch (err.name) {
+            case 'NotFoundError':
+              this.setState({total: 0});
+              this.setState({Item1Time: ''})
+              this.setState({Item1Check: false})
+              break;
+    }})
+ }
+
+ getItem1();
+}
+
+removeData = async () => {
+    storage.remove({
+        key: 'total'
+      }).then(res => {
+        this.setState({total: 0})
+        this.setState({Item1Time: ''})
+        this.setState({Item1Check: false})
+        console.log(this.state.total)
+      });
+}
 
     render() {
-        return (
+            return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.main}>
                 <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#aaa"}}>Você coletou {this.state.total} item(s) de 3 deste episódio!</Text>
@@ -109,17 +129,14 @@ class Episodio extends Component {
                         </TextInput>
 
                         <View style={{flexDirection: 'column'}}>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={this.checkItem1}>
-                                <Text style={{color: "#fff"}}>-></Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={this.increment}>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={() => this.checkAndSend() }>
                                 <Text style={{color: "#fff"}}>-></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#f5a845'}}>Segundo item(3:20):</Text>
+                        <Text style={{fontSize: 16, color: '#f5a845'}}>Segundo item(m:ss):</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -137,7 +154,7 @@ class Episodio extends Component {
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#51f542'}}>Terceiro item(4:40):</Text>
+                        <Text style={{fontSize: 16, color: '#51f542'}}>Terceiro item(m:ss):</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -155,8 +172,10 @@ class Episodio extends Component {
                     </View>
 
                 </View>
-
-            </SafeAreaView>
+                <TouchableOpacity onPress={this.removeData} style={{padding: 5, backgroundColor: 'red', alignSelf: 'center', marginBottom: 10, borderRadius: 10}}>
+                    <Text style={{color: "#fff"}}>Resetar</Text>
+                </TouchableOpacity>
+            </SafeAreaView> 
             
         );
     } 

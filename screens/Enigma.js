@@ -9,7 +9,7 @@ class Enigma extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Enigma</Text>
+                <Text>Bota o qr code aqui caralho</Text>
             </View>
         );
     }

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, StatusBar} from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import React, { Component } from 'react';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { createAppContainer, NavigationEvents } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Perfil from './Perfil';
 import Infos from './Infos';
@@ -9,115 +9,142 @@ import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
 import Enigma from './Enigma'
 import { createStackNavigator } from 'react-navigation-stack';
-import Loading from './Components/Loading';
+const storage = global.storage
 
-class Inicio extends Component {
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-             <StatusBar backgroundColor="#242626"/>
-            <Image style={{width: 200, height: 60, marginTop: 20}} source={require('../assets/logo.png')} ></Image>
+export class Inicio extends Component {
+  state = {
+    ep1Total: 0,
+    ep2Total: 0,
+    ep3Total: 0
+  }
 
-              <View style={styles.containerCards}>
-              <ScrollView
-                scrollEventThrottle={16}
-              >
-                <View style={{flex: 1, paddingTop: 20}}>
-                  <Text style={{fontSize: 34, fontWeight: '700', paddingHorizontal: 20, color: '#fff'}}>EPISÓDIOS</Text>
-                </View>
-                <View style={{height: 300, marginTop: 20}}>
-                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+  update = () => {
+    storage.load({
+      key: 'total',
+    })
+      .then(ret => {
+        this.setState({ ep1Total: ret.total })
+        console.log(ret.total)
+        return ret.total;
+      })
+      .catch(err => {
+        console.log(err.message);
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio')}>
-                      <Episodios imageUri={require('../assets/naruto.jpg')} titulo={'1. Naruto'} coletados={'2'}
-                      />
-                    </TouchableOpacity>
+        switch (err.name) {
+          case 'NotFoundError':
+            return this.setState({ ep1Total: 0 });
+        }
+      })
+  }
 
-                    <TouchableOpacity>
-                    <Episodios imageUri={require('../assets/sasuke.jpg')} titulo={'2. Sasuke'} coletados={'0'}
-                    />
-                    </TouchableOpacity>
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <NavigationEvents onWillFocus={() => { this.update() }} />
+        <StatusBar backgroundColor="#242626" />
+        <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
+        <View style={styles.containerCards}>
+          <ScrollView
+            scrollEventThrottle={16}
+          >
+            <View style={{ flex: 1, paddingTop: 20 }}>
+              <Text style={{ fontSize: 34, fontWeight: '700', paddingHorizontal: 20, color: '#fff' }}>EPISÓDIOS</Text>
+            </View>
+            <View style={{ height: 300, marginTop: 20 }}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
-                    <TouchableOpacity>
-                    <Episodios imageUri={require('../assets/sakura.jpg')} titulo={'3. Sakura'} coletados={'0'}
-                    />
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio')}>
+                  <Episodios imageUri={require('../assets/naruto.jpg')} titulo={'1. Naruto'} coletados={this.state.ep1Total}
+                    onUpdate={() => this.update()}
+                  />
+                </TouchableOpacity>
 
-                    <TouchableOpacity>
-                    <Episodios imageUri={require('../assets/pain.png')} titulo={'4. Pain'} coletados={'0'}
-                    />
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity>
-                    <Episodios imageUri={require('../assets/madara.jpg')} titulo={'5. Madara'} coletados={'0'}
-                    />
-                    </TouchableOpacity>
+                <TouchableOpacity>
+                  <Episodios imageUri={require('../assets/sasuke.jpg')} titulo={'2. Sasuke'} coletados={'0'}
+                  />
+                </TouchableOpacity>
 
-                  </ScrollView>
-                </View>
+                <TouchableOpacity>
+                  <Episodios imageUri={require('../assets/sakura.jpg')} titulo={'3. Sakura'} coletados={'0'}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <Episodios imageUri={require('../assets/pain.png')} titulo={'4. Pain'} coletados={'0'}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <Episodios imageUri={require('../assets/madara.jpg')} titulo={'5. Madara'} coletados={'0'}
+                  />
+                </TouchableOpacity>
+
               </ScrollView>
-              </View>
+            </View>
+          </ScrollView>
+        </View>
 
-            </SafeAreaView>
-        );
-    }
+      </SafeAreaView>
+    );
+  }
 }
 
 let NavToggle = true;
 
 const TabNavigator = createBottomTabNavigator({
-    Inicio: {
-      screen: createStackNavigator({
-        Inicio: { 
-          screen: Episodio,
-          navigationOptions: () => ({
-            headerShown: false,
-            
-          }),
+  Inicio: {
+    screen: createStackNavigator({
+      Inicio: {
+        screen: Inicio,
+        navigationOptions: () => ({
+          headerShown: false,
 
-        },
-
-
-        Episodio: { 
-          screen: Episodio,
-          navigationOptions: () => ({
-            title: `Naruto`,
-            headerTintColor: '#fff',
-            headerStyle: {backgroundColor: '#242626'},
-          }),
-        
-        },
-
-        Enigma: { 
-          screen: Enigma,
-          navigationOptions: () => ({
-            headerShown: true,
-          }),
-        
-        }
+        }),
 
       },
+
+
+      Episodio: {
+        screen: Episodio,
+        navigationOptions: () => ({
+          title: `Naruto`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#242626' },
+        }),
+
+      },
+
+      Enigma: {
+        screen: Enigma,
+        navigationOptions: () => ({
+          headerShown: true,
+        }),
+
+      }
+
+    },
       {
         defaultNavigationOptions: ({ navigation }) => {
           const { routeName } = navigation.state;
+
           if (routeName === 'Episodio' || routeName === 'Enigma') {
             NavToggle = false;
           } else {
             NavToggle = true;
           }
         }
-       
+
 
       })
-    },
-    Informações: Infos,
-    Perfil: Perfil,
   },
+  Informações: Infos,
+  Perfil: Perfil,
+},
 
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarVisible: NavToggle,
-      tabBarIcon: ({tintColor }) => {
+      tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Icon;
         let iconName;
@@ -126,9 +153,9 @@ const TabNavigator = createBottomTabNavigator({
         } else if (routeName === 'Informações') {
           iconName = 'md-information-circle';
         } else if (routeName === 'Perfil') {
-            iconName = 'md-person';
+          iconName = 'md-person';
         }
-        
+
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
     }),
@@ -138,24 +165,24 @@ const TabNavigator = createBottomTabNavigator({
       inactiveTintColor: '#000',
       style: {
         backgroundColor: '#fff',
-    }
+      }
     },
   }
 );
 
-  
+
 export default createAppContainer(TabNavigator);
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#242624',
-        flex: 1,
-        alignItems: 'center',
-        alignContent: 'flex-start',
-        justifyContent: 'flex-start',
-    },
-    containerCards: {
-      flex: 1,
-      marginTop: 20
-    }
+  container: {
+    backgroundColor: '#242624',
+    flex: 1,
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  containerCards: {
+    flex: 1,
+    marginTop: 20
+  }
 });
