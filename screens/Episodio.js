@@ -8,6 +8,7 @@ import {
     TouchableOpacity,	
 } from "react-native";
 import Storage from 'react-native-storage';
+import { NavigationEvents }  from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 const storage = new Storage({
     // maximum capacity, default 1000
@@ -25,15 +26,13 @@ const storage = new Storage({
     enableCache: true,
   });
 
-  global.storage = storage;
-
-
-
 class Episodio extends Component {
     state = {
         total: 0,
         Item1Time: '',
         Item1Check: false,
+        colorDefault: '#fff',
+        colorPicked: '#7dfa9e',
         Item2Time: '',
         Item3Time: '',
         loading: true
@@ -44,81 +43,103 @@ checkItem1 = async () => {
         if (this.state.Item1Time == "1:52" && this.state.Item1Check == false) {
         {
         await storage.save({
-            key: 'total', // Note: Do not use underscore("_") in key!
+            key: 'item1Time', // Note: Do not use underscore("_") in key!
             data: {
-                total: this.state.total += 1,
                 Item1Time: this.state.Item1Time,
                 Item1Check: true
             }
         })
 
         await storage.load({
-            key: 'total'
+            key: 'item1Time'
         }).then(ret => {
-            this.setState({total: ret.total})
             this.setState({Item1Time: ret.Item1Time})
             this.setState({Item1Check: ret.Item1Check})
-            console.log(ret.Item1Check)
         })
         
-        this.props.navigation.navigate('Enigma')
+        this.props.navigation.navigate('Enigma1')
         }
     }
     else if (this.state.Item1Time == "1:52" && this.state.Item1Check == true) {
-        this.props.navigation.navigate('Enigma')
+        this.props.navigation.navigate('Enigma1')
     }
 
 }
 
-checkAndSend() {
-    this.checkItem1();
-    this.forceUpdate();
-}
-
-componentWillMount() {
- getItem1 = async () => {
+getItem1 = async () => {
     await storage.load({
-        key: 'total',
+        key: 'item1Time',
     })
     .then(ret => {
-        this.setState({total: ret.total})
         this.setState({Item1Time: ret.Item1Time})
         this.setState({Item1Check: ret.Item1Check})
-        console.log(ret.total)
+        this.setState({colorDefault: '#7dfa9e'})
     })
     .catch(err => {
-        console.log(err.message);
+
 
         switch (err.name) {
             case 'NotFoundError':
-              this.setState({total: 0});
               this.setState({Item1Time: ''})
               this.setState({Item1Check: false})
+              this.setState({colorDefault: "#fff"})
               break;
     }})
  }
 
- getItem1();
+componentWillMount() {
+ this.getItem1();
 }
 
 removeData = async () => {
+
+    const Gstorage = global.storage;
+
     storage.remove({
-        key: 'total'
-      }).then(res => {
-        this.setState({total: 0})
-        this.setState({Item1Time: ''})
-        this.setState({Item1Check: false})
-        console.log(this.state.total)
+        key: 'item1Time'
+      }).then(() => {
+          this.setState({Item1Time: ''})
+          this.setState({Item1Check: false})
+          this.setState({colorDefault: "#fff"})
       });
+
+      Gstorage.remove({
+        key: 'total'
+      }).then(() => {
+        this.setState({total: 0})
+      });
+
 }
+
+getTotal = async () => {
+    this.getItem1();
+    const Gstorage = global.storage;
+
+    Gstorage.load({
+        key: 'total',
+      })
+        .then(ret => {
+          this.setState({ total: ret.totalAmount })
+          return ret.totalAmount;
+        })
+        .catch(err => {
+
+          switch (err.name) {
+            case 'NotFoundError':
+              return this.setState({ total: 0 });
+          }
+        })
+ }
 
     render() {
             return (
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
+            <NavigationEvents onWillFocus={() => { this.getTotal() }} />
                 <View style={styles.main}>
-                <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#aaa"}}>Você coletou {this.state.total} item(s) de 3 deste episódio!</Text>
+                <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#fff"}}>Você coletou {this.state.total} item(s) de 3 deste episódio!</Text>
+
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#48cefa'}}>Primeiro item(1:52):</Text>
+                        <Text style={{fontSize: 16, color: this.state.colorDefault }}>Primeiro item(1:52):</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -129,14 +150,14 @@ removeData = async () => {
                         </TextInput>
 
                         <View style={{flexDirection: 'column'}}>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={() => this.checkAndSend() }>
+                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={() => this.checkItem1() }>
                                 <Text style={{color: "#fff"}}>-></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#f5a845'}}>Segundo item(m:ss):</Text>
+                        <Text style={{fontSize: 16, color: '#FFF'}}>Segundo item(m:ss):</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -154,7 +175,7 @@ removeData = async () => {
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#51f542'}}>Terceiro item(m:ss):</Text>
+                        <Text style={{fontSize: 16, color: '#FFF'}}>Terceiro item(m:ss):</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -172,10 +193,10 @@ removeData = async () => {
                     </View>
 
                 </View>
-                <TouchableOpacity onPress={this.removeData} style={{padding: 5, backgroundColor: 'red', alignSelf: 'center', marginBottom: 10, borderRadius: 10}}>
+                <TouchableOpacity onPress={() => {this.removeData()} } style={{padding: 5, backgroundColor: 'red', alignSelf: 'center', marginBottom: 10, borderRadius: 10}}>
                     <Text style={{color: "#fff"}}>Resetar</Text>
                 </TouchableOpacity>
-            </SafeAreaView> 
+            </View> 
             
         );
     } 
@@ -190,19 +211,20 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         paddingHorizontal: 20,
-        backgroundColor: '#242626'
+        backgroundColor: '#0d0d0d'
     },
     main: {
         flex: 2, 
         flexDirection: 'column',
         alignSelf: 'stretch',
+        backgroundColor: '#0d0d0d'
     },
     containerContent: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        backgroundColor: '#242626',
+        backgroundColor: '#0d0d0d',
     },
     input: {
         textAlign: 'center',

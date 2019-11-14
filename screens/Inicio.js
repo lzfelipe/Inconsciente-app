@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity, Image, StatusBar } from 'react-native';
-import { createAppContainer, NavigationEvents } from 'react-navigation';
+import { createAppContainer, NavigationEvents }  from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Perfil from './Perfil';
 import Infos from './Infos';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
-import Enigma from './Enigma'
+import Enigma1 from './Enigma1'
 import { createStackNavigator } from 'react-navigation-stack';
 const storage = global.storage
 
@@ -18,18 +18,16 @@ export class Inicio extends Component {
     ep3Total: 0
   }
 
+
   update = () => {
     storage.load({
       key: 'total',
     })
       .then(ret => {
-        this.setState({ ep1Total: ret.total })
-        console.log(ret.total)
-        return ret.total;
+        this.setState({ ep1Total: ret.totalAmount })
+        return ret.totalAmount;
       })
       .catch(err => {
-        console.log(err.message);
-
         switch (err.name) {
           case 'NotFoundError':
             return this.setState({ ep1Total: 0 });
@@ -40,8 +38,8 @@ export class Inicio extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <NavigationEvents onWillFocus={() => { this.update() }} />
         <StatusBar backgroundColor="#242626" />
+        <NavigationEvents onWillFocus={() => { this.update() }} />
         <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
         <View style={styles.containerCards}>
           <ScrollView
@@ -53,7 +51,7 @@ export class Inicio extends Component {
             <View style={{ height: 300, marginTop: 20 }}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio', {coletados: this.state.ep1Total})}>
                   <Episodios imageUri={require('../assets/naruto.jpg')} titulo={'1. Naruto'} coletados={this.state.ep1Total}
                     onUpdate={() => this.update()}
                   />
@@ -89,7 +87,7 @@ export class Inicio extends Component {
   }
 }
 
-let NavToggle = true;
+let navToggle = true;
 
 const TabNavigator = createBottomTabNavigator({
   Inicio: {
@@ -98,15 +96,14 @@ const TabNavigator = createBottomTabNavigator({
         screen: Inicio,
         navigationOptions: () => ({
           headerShown: false,
-
         }),
-
       },
 
 
       Episodio: {
         screen: Episodio,
         navigationOptions: () => ({
+          headerShown: true,
           title: `Naruto`,
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
@@ -114,42 +111,46 @@ const TabNavigator = createBottomTabNavigator({
 
       },
 
-      Enigma: {
-        screen: Enigma,
+      Enigma1: {
+        screen: Enigma1,
         navigationOptions: () => ({
           headerShown: true,
+          title: `Enigma 1`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#242626' },
         }),
 
       }
 
     },
-      {
-        defaultNavigationOptions: ({ navigation }) => {
-          const { routeName } = navigation.state;
+    {
+      defaultNavigationOptions: ({ navigation }) => {
+        const { routeName } = navigation.state;
 
-          if (routeName === 'Episodio' || routeName === 'Enigma') {
-            NavToggle = false;
-          } else {
-            NavToggle = true;
-          }
+        if (routeName === 'Inicio') {
+          navToggle = true;
+        } else {
+          navToggle = false;
         }
-
-
-      })
-  },
+      }
+    }
+    ), 
+  
+  }, 
   Informações: Infos,
   Perfil: Perfil,
 },
 
   {
     defaultNavigationOptions: ({ navigation }) => ({
-      tabBarVisible: NavToggle,
+      tabBarVisible: navToggle,
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Icon;
         let iconName;
         if (routeName === 'Inicio') {
           iconName = 'md-home';
+
         } else if (routeName === 'Informações') {
           iconName = 'md-information-circle';
         } else if (routeName === 'Perfil') {
@@ -160,6 +161,7 @@ const TabNavigator = createBottomTabNavigator({
       },
     }),
     tabBarOptions: {
+      keyboardHidesTabBar: true,
       activeBackgroundColor: '#000',
       activeTintColor: '#fff',
       inactiveTintColor: '#000',
@@ -175,7 +177,7 @@ export default createAppContainer(TabNavigator);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#242624',
+    backgroundColor: '#0d0d0d',
     flex: 1,
     alignItems: 'center',
     alignContent: 'flex-start',
