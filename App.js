@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar, Image} from 'react-native';
 import firebase from 'react-native-firebase';
 import Inicio from './screens/Inicio';
 import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from './screens/Components/Loading';
+import { KeyboardAwareScrollView  } from 'react-native-keyboard-aware-scroll-view'
 
 
 class App extends Component {
@@ -55,7 +56,7 @@ class App extends Component {
     setTimeout( () => {
           this.setTimePassed();
           this.setState({loading: false});
-      },1500);
+      },4000);
     }
 
     setTimePassed() {
@@ -196,15 +197,17 @@ class App extends Component {
      
       if (this.state.isAuthenticated == false) { 
         return <View style={styles.container}>
-            <StatusBar backgroundColor="#2C1446"/>
-            <View style={styles.purple}></View>
+            <StatusBar backgroundColor="#000"/>
+            <View style={{flex: 0, backgroundColor: '#000', width: '100%', height: '20%', justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={require('./assets/logo.png')} style={{width: '60%', height: '60%', resizeMode: 'contain'}}></Image>
+            </View>
             <View style={styles.containerErro}>
             <Text style={styles.errorText}> {this.state.errMessage} </Text>
             </View>
   
             <View style={styles.containerButtons}>
               <TouchableOpacity style={styles.buttonsRegister} onPress={() => this.setState({ registerToggle: false })}>
-                <Text style={{color: "#2C1446", marginBottom: 20, fontSize: 18}} >Login</Text>
+                <Text style={{color: "#000", marginBottom: 20, fontSize: 18}} >Login</Text>
               </TouchableOpacity>
   
               <TouchableOpacity style={styles.buttonsRegister} onPress={() => this.setState({ registerToggle: true })} >
@@ -218,7 +221,7 @@ class App extends Component {
             placeholder="Digite seu email."
             value={this.state.email}
             onChangeText={email => this.setState ({ email }) }
-            placeholderTextColor="#8A66A2"
+            placeholderTextColor="#000"
             >
             </TextInput>
             
@@ -228,7 +231,7 @@ class App extends Component {
             placeholder="Digite sua senha."
             value={this.state.password}
             onChangeText={password => this.setState ({ password }) }
-            placeholderTextColor="#8A66A2"
+            placeholderTextColor="#000"
             secureTextEntry={true}
             >
             </TextInput>
@@ -247,14 +250,16 @@ class App extends Component {
 
   //View Registro
   if (this.state.registerToggle == true) {
-    return  <View style={styles.container}>
-       <StatusBar backgroundColor="#2C1446"/>
-      <View style={styles.purple}></View>
+    return <View style={styles.container}>
+       <StatusBar backgroundColor="#000"/>
+       <View style={{flex: 0, backgroundColor: '#000', width: '100%', height: '20%', justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={require('./assets/logo.png')} style={{width: '60%', height: "60%", resizeMode: 'contain'}}></Image>
+        </View>
       
       <View style={styles.containerErro}>
         <Text style={styles.errorText}> {this.state.errMessage} </Text>
       </View>
-  
+      <KeyboardAwareScrollView>
       <View style={styles.containerButtons}>
 
         <TouchableOpacity style={styles.buttonsRegister} onPress={() => this.setState({ registerToggle: false })}>
@@ -262,17 +267,18 @@ class App extends Component {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonsRegister} onPress={() => this.setState({ registerToggle: true })}>
-          <Text style={{color: "#2C1446", marginBottom: 20, fontSize: 18}} >Registrar</Text>
+          <Text style={{color: "#000", marginBottom: 20, fontSize: 18}} >Registrar</Text>
         </TouchableOpacity>
 
       </View>
+      
       <View style={styles.containerInputs}>
         <TextInput
         style={styles.input}
         placeholder="Digite seu email."
         value={this.state.emailRegister}
         onChangeText={emailRegister => this.setState ({ emailRegister }) }
-        placeholderTextColor="#8A66A2"
+        placeholderTextColor="#000"
         >
         </TextInput>
 
@@ -282,7 +288,7 @@ class App extends Component {
         placeholder="Digite sua senha."
         value={this.state.passwordRegister}
         onChangeText={passwordRegister => this.setState ({ passwordRegister }) }
-        placeholderTextColor="#8A66A2"
+        placeholderTextColor="#000"
         secureTextEntry={true}
         >
         </TextInput>
@@ -292,7 +298,7 @@ class App extends Component {
         placeholder="Confirme sua senha."
         value={this.state.passwordConfirm}
         onChangeText={passwordConfirm => this.setState ({ passwordConfirm }) }
-        placeholderTextColor="#8A66A2"
+        placeholderTextColor="#000"
         secureTextEntry={true}
         >
         </TextInput>
@@ -300,8 +306,9 @@ class App extends Component {
         <TouchableOpacity style={styles.button} onPress={this.register}>
             <Text style={styles.buttonText}>Registrar</Text>
         </TouchableOpacity>
-
+        </KeyboardAwareScrollView>
     </View>
+    
   }
 }
 }
@@ -312,19 +319,8 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
     alignContent: 'center',
-  },
-  purple: {
-    flex: 1,
-    backgroundColor: '#2C1446',
-    width: "120%",
-    maxHeight: "20%",
-    borderBottomLeftRadius: 1000,
-    borderBottomRightRadius: 1000,
-    elevation: 10,
-    alignSelf:'flex-start',
-    marginLeft: -35
   },
   containerErro: {
     marginTop: 20,
@@ -340,18 +336,18 @@ const styles = StyleSheet.create({
   containerInputs: {
     width: "70%",
     alignSelf: 'center',
-    marginLeft: -6,
+    marginLeft: -9,
   },
   input: {
     height: 45,
-    borderBottomColor: '#8A66A2',
+    borderBottomColor: '#000',
     borderBottomWidth: 2,
     marginBottom: 20,
     marginTop: 10,
   },
   button: {
     height: 45,
-    backgroundColor: '#8A66A2',
+    backgroundColor: '#000',
     width: 200,
     alignSelf: 'center',
     marginTop: 10,
@@ -368,17 +364,20 @@ const styles = StyleSheet.create({
   buttonsRegister: {
     height: 10,
     marginRight: 20,
-    borderBottomColor: '#8A66A2',
+    borderBottomColor: '#000',
     borderBottomWidth: 1.5,
     paddingVertical: 28,
-    marginTop: 10,
+    marginTop: 0,
   },
   buttonText: {
     color: "#fff",
     fontSize: 18
   },
   errorText: {
-    color: "#8A66A2",
+    color: "#000",
+    fontSize: 14,
+    textAlign: 'center',
+    justifyContent: 'center'
   },
 
 });
