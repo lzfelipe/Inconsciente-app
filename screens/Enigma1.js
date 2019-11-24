@@ -47,7 +47,7 @@ class Enigma extends Component {
         })
 
 
-        if(fixedResp == "koringa" && respondido == false) {
+        if(fixedResp == "kuringa" && respondido == false) {
 
             await Gstorage.save({
                 key: 'total', // Note: Do not use underscore("_") in key!
@@ -58,7 +58,7 @@ class Enigma extends Component {
                 }
             }).then(ret => {
                 this.setState({respondido: true})
-                this.setState({resposta: 'koringa'})
+                this.setState({resposta: 'kuringa'})
                 this.props.navigation.goBack()
             })
 
