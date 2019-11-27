@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Text,
 } from "react-native";
-import qrcode from '../assets/qrcode.png'
+import qrcode from '../../assets/qrcode.png'
 import { KeyboardAwareScrollView  } from 'react-native-keyboard-aware-scroll-view'
 import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';

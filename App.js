@@ -56,7 +56,7 @@ class App extends Component {
     setTimeout( () => {
           this.setTimePassed();
           this.setState({loading: false});
-      },4000);
+      },3000);
     }
 
     setTimePassed() {

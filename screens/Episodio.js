@@ -10,6 +10,9 @@ import {
 import Storage from 'react-native-storage';
 import { NavigationEvents }  from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
 const storage = new Storage({
     size: 1000,
     storageBackend: AsyncStorage,
@@ -62,12 +65,13 @@ getItem1 = async () => {
         key: 'item1Time',
     })
     .then(ret => {
+        console.log(ret)
         this.setState({Item1Time: ret.Item1Time})
         this.setState({Item1Check: ret.Item1Check})
         this.setState({colorDefault: '#7dfa9e'})
     })
     .catch(err => {
-
+        console.log(err)
 
         switch (err.name) {
             case 'NotFoundError':
@@ -130,7 +134,7 @@ getTotal = async () => {
                 <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#fff"}}>Você coletou {this.state.total} item(s) de 3 deste episódio!</Text>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: this.state.colorDefault }}>Primeiro item(1:52):</Text>
+                    <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -141,14 +145,16 @@ getTotal = async () => {
                         </TextInput>
 
                         <View style={{flexDirection: 'column'}}>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}} onPress={() => this.checkItem1() }>
-                                <Text style={{color: "#fff"}}>-></Text>
+                            <TouchableOpacity
+                            onPress={() => this.checkItem1() }
+                            style={{backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5}}>
+                                <Icon name={'md-arrow-dropright'} size={25} color={'#000'}/>
                             </TouchableOpacity>
                         </View>
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#FFF'}}>Segundo item(m:ss):</Text>
+                        <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -159,14 +165,14 @@ getTotal = async () => {
                         </TextInput>
 
                         <View style={{flexDirection: 'column'}}>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}}>
-                                <Text style={{color: "#fff"}}>-></Text>
+                            <TouchableOpacity style={{backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5}}>
+                                <Icon name={'md-arrow-dropright'} size={25} color={'#000'}/>
                             </TouchableOpacity>
                         </View>
                     </View>
 
                     <View style={styles.containerContent}>
-                        <Text style={{fontSize: 16, color: '#FFF'}}>Terceiro item(m:ss):</Text>
+                        <Icon name={'md-square'} size={40} color={'#8A66A2'}/>
                         <TextInput
                             style={styles.input}
                             placeholder="Min."
@@ -177,8 +183,8 @@ getTotal = async () => {
                         </TextInput>
 
                         <View style={{flexDirection: 'column'}}>
-                            <TouchableOpacity style={{backgroundColor: "#8A66A2", padding: 15, borderRadius: 10}}>
-                                <Text style={{color: "#fff"}}>-></Text>
+                            <TouchableOpacity style={{backgroundColor: "#fff", paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5}}>
+                                <Icon name={'md-arrow-dropright'} size={25} color={'#000'}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -220,7 +226,7 @@ const styles = StyleSheet.create({
     input: {
         textAlign: 'center',
         width: 60,
-        borderBottomColor: '#8A66A2',
+        borderBottomColor: '#fff',
         borderBottomWidth: 2,
         marginBottom: 20,
         color: '#fff'

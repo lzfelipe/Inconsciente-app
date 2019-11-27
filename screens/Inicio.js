@@ -7,7 +7,8 @@ import Infos from './Infos';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
-import Enigma1 from './Enigma1'
+import Enigma1 from './Stacks/Enigma1'
+import RodrigoInfos from './Stacks/RodrigoInfos'
 import { createStackNavigator } from 'react-navigation-stack';
 const storage = global.storage
 
@@ -52,28 +53,28 @@ export class Inicio extends Component {
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio', {coletados: this.state.ep1Total})}>
-                  <Episodios imageUri={require('../assets/naruto.jpg')} titulo={'1. Naruto'} coletados={this.state.ep1Total}
+                  <Episodios imageUri={require('../assets/ep1.jpg')} titulo={'1. Piloto'} coletados={this.state.ep1Total}
                     onUpdate={() => this.update()}
                   />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/sasuke.jpg')} titulo={'2. Sasuke'} coletados={'0'}
+                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'2. Desconfiado'} coletados={'0'}
                   />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/sakura.jpg')} titulo={'3. Sakura'} coletados={'0'}
+                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'3. Descobertas'} coletados={'0'}
                   />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/pain.png')} titulo={'4. Pain'} coletados={'0'}
+                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'4. Luta'} coletados={'0'}
                   />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/madara.jpg')} titulo={'5. Madara'} coletados={'0'}
+                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'5. O Inimigo'} coletados={'0'}
                   />
                 </TouchableOpacity>
 
@@ -104,7 +105,7 @@ const TabNavigator = createBottomTabNavigator({
         screen: Episodio,
         navigationOptions: () => ({
           headerShown: true,
-          title: `Naruto`,
+          title: `Piloto`,
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
@@ -137,7 +138,43 @@ const TabNavigator = createBottomTabNavigator({
     ), 
   
   }, 
-  Informações: Infos,
+
+  Informações: {
+    screen: createStackNavigator({
+      Informações: {
+        screen: Infos,
+        navigationOptions: () => ({
+          headerShown: false,
+        }),
+      },
+
+      RodrigoInfos: {
+        screen: RodrigoInfos,
+        navigationOptions: () => ({
+          headerShown: true,
+          title: `Rodrigo`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#0d0d0d' },
+        }),
+      },
+
+
+
+  },{
+    defaultNavigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state;
+
+      if (routeName === 'Informações') {
+        navToggle = true;
+      } else {
+        navToggle = false;
+      }
+    }
+  }
+
+  )},
+
+
   Perfil: Perfil,
 },
 
