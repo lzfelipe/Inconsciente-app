@@ -9,6 +9,7 @@ import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
 import Enigma1 from './Stacks/Enigma1'
 import RodrigoInfos from './Stacks/RodrigoInfos'
+import EduardoInfos from './Stacks/EduardoInfos'
 import { createStackNavigator } from 'react-navigation-stack';
 const storage = global.storage
 
@@ -39,7 +40,7 @@ export class Inicio extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="#242626" />
+        <StatusBar backgroundColor="#0d0d0d" />
         <NavigationEvents onWillFocus={() => { this.update() }} />
         <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
         <View style={styles.containerCards}>
@@ -153,6 +154,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `Rodrigo`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#0d0d0d' },
+        }),
+      },
+
+      EduardoInfos: {
+        screen: EduardoInfos,
+        navigationOptions: () => ({
+          headerShown: true,
+          title: `Eduardo`,
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#0d0d0d' },
         }),

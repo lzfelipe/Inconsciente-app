@@ -15,14 +15,14 @@ class App extends Component {
     emailRegister: '',
     passwordRegister: '',
     passwordConfirm: '',
-    isAuthenticated: false,
+    isAuthenticated: true,
     catchError: false,
     errMessage: '',
     userEmail: '',
     userUid: '',
     registerToggle: false,
     loading: true,
-    timePassed: false,
+    timePassed: true,
   }
 
   getData = async () => {

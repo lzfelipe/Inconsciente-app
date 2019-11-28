@@ -21,13 +21,13 @@ class Infos extends Component {
                         underlayColor = '#ccc'
                         onPress = { () => this.props.navigation.navigate('RodrigoInfos') }
                         >
-                            <Image style={styles.buttonContent} source={require('../assets/rodrigo.jpg')} ></Image>
+                            <Image style={styles.buttonContent} source={require('../assets/rodrigo.png')} ></Image>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style = {styles.buttonCircle}
                         underlayColor = '#ccc'
-                        onPress = { () => Alert.alert('Espere um pouco...', 'Você ainda não viu esse personagem!') }
+                        onPress = { () => this.props.navigation.navigate('EduardoInfos') }
                         >
                             <Image style={styles.buttonContent} source={require('../assets/elias.png')} ></Image>
                     </TouchableOpacity>
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
         width: Dimensions.get('window').width * 0.45,
         height: Dimensions.get('window').width * 0.45,
-        borderWidth: 3,
-        borderColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ccc',
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginLeft: Dimensions.get('window').width * 0.025,

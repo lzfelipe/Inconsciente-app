@@ -5,12 +5,11 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
-    StatusBar,
-    Dimensions,
+    StatusBar
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-class RodrigoInfos extends Component {
+class EduardoInfos extends Component {
     
     render() {
         return (
@@ -20,18 +19,18 @@ class RodrigoInfos extends Component {
 
            <View style={{height: 300, width: "100%", borderRadius: 10}}>
                       <View style={{flex: 4}}>
-                      <Image source={require('../../assets/rodrigo.png')} 
+                      <Image source={require('../../assets/elias.png')} 
                           style={{flex: 20, width: null, height: null, resizeMode: 'cover', borderRadius: 8}}
                         />
                     </View>
             </View>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: '#fff', fontSize: 28}}>Rodrigo Costa Souza</Text>
+                <Text style={{color: '#fff', fontSize: 28}}>Eduardo n sei o nome inteiro</Text>
             </View>
 
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-                <Text style={{color: '#fff', fontSize: 20}}>25 anos </Text>
-                <Text style={{color: '#fff', fontSize: 20}}> Investigador</Text>
+                <Text style={{color: '#fff', fontSize: 20}}>vários anos </Text>
+                <Text style={{color: '#fff', fontSize: 20}}> um profissional</Text>
             </View>
 
             <View style={{alignContent: 'center', marginHorizontal: 10}}>
@@ -52,7 +51,7 @@ class RodrigoInfos extends Component {
        )
     }
 }
-export default RodrigoInfos;
+export default EduardoInfos;
 
 const styles = StyleSheet.create({
     container: {

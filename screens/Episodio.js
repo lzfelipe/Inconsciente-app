@@ -33,8 +33,15 @@ class Episodio extends Component {
         
     }
 
+
 checkItem1 = async () => {
-        if (this.state.Item1Time == "1:52" && this.state.Item1Check == false) {
+        const item1PossibleTimes = ["0:30", "0:31", "0:32", "0:33", "0:34", "0:35", "0:39", "0:40", "0:41", "0:42", "0:43", "0:49",
+        "0:50", "0:51", "0:52", "0:53", "0:54", "0:55", "0:56", "1:06", "1:07", "1:08", "1:09", "1:10", "1:11", "1:12", "1:13"]
+
+        const item2PossibleTimes = ["2:02", "2:03", "2:04", "2:05", "2:06", "2:07", "2:08", "2:09"]
+
+
+        if (this.state.Item1Time == item1PossibleTimes && this.state.Item1Check == false) {
         {
         await storage.save({
             key: 'item1Time', // Note: Do not use underscore("_") in key!
