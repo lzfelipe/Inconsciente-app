@@ -8,8 +8,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
 import Enigma1 from './Stacks/Enigma1'
+import Enigma2 from './Stacks/Enigma2';
 import RodrigoInfos from './Stacks/RodrigoInfos'
 import EduardoInfos from './Stacks/EduardoInfos'
+import VideoUnblocked from './Components/VideoUnblocked';
 import { createStackNavigator } from 'react-navigation-stack';
 const storage = global.storage
 
@@ -21,20 +23,40 @@ export class Inicio extends Component {
   }
 
 
-  update = () => {
-    storage.load({
-      key: 'total',
+  update = async () => {
+    //CHECAGEM SE O PRIMEIRO ENIGMA FOI CONCLUIDO 
+   const Completed1 = await storage.load({
+    key: 'total1',
+  })
+    .then(ret => {
+        return ret.totalAmount
     })
-      .then(ret => {
-        this.setState({ ep1Total: ret.totalAmount })
-        return ret.totalAmount;
-      })
-      .catch(err => {
-        switch (err.name) {
-          case 'NotFoundError':
-            return this.setState({ ep1Total: 0 });
-        }
-      })
+    .catch(err => {
+
+      switch (err.name) {
+        case 'NotFoundError':
+          return 0;
+      }
+    })
+
+//CHECAGEM SE O SEGUNDO ENIGMA FOI CONCLUIDO     
+const Completed2 = await storage.load({
+    key: 'total2',
+  })
+    .then(ret => {
+      return ret.totalAmount
+    })
+    .catch(err => {
+
+      switch (err.name) {
+        case 'NotFoundError':
+          return 0;
+      }
+    })
+
+  //SOMA O TOTAL DE ENIGMAS CONCLUIDOS
+  const DefTotal = await Completed1 + Completed2
+  return this.setState({ep1Total: DefTotal})
   }
 
   render() {
@@ -121,7 +143,26 @@ const TabNavigator = createBottomTabNavigator({
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
+      },
 
+      Enigma2: {
+        screen: Enigma2,
+        navigationOptions: () => ({
+          headerShown: true,
+          title: `Enigma 2`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#242626' },
+        }),
+      },
+
+      VideoUnblocked: {
+        screen: VideoUnblocked,
+        navigationOptions: () => ({
+          headerShown: true,
+          title: `?`,
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#242626' },
+        }),
       }
 
     },
@@ -129,7 +170,7 @@ const TabNavigator = createBottomTabNavigator({
       defaultNavigationOptions: ({ navigation }) => {
         const { routeName } = navigation.state;
 
-        if (routeName === 'Inicio') {
+        if (routeName == 'Inicio' ) {
           navToggle = true;
         } else {
           navToggle = false;

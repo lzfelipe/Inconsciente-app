@@ -6,6 +6,7 @@ import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from './screens/Components/Loading';
 import { KeyboardAwareScrollView  } from 'react-native-keyboard-aware-scroll-view'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 class App extends Component {
@@ -15,14 +16,14 @@ class App extends Component {
     emailRegister: '',
     passwordRegister: '',
     passwordConfirm: '',
-    isAuthenticated: true,
+    isAuthenticated: false,
     catchError: false,
     errMessage: '',
     userEmail: '',
     userUid: '',
     registerToggle: false,
     loading: true,
-    timePassed: true,
+    timePassed: false,
   }
 
   getData = async () => {
@@ -56,7 +57,7 @@ class App extends Component {
     setTimeout( () => {
           this.setTimePassed();
           this.setState({loading: false});
-      },3000);
+      },2300);
     }
 
     setTimePassed() {
@@ -190,6 +191,7 @@ class App extends Component {
 
 
   render() {
+
     if(!this.state.timePassed) {return  <Loading />}
     else {
     //View Login
@@ -216,22 +218,19 @@ class App extends Component {
             </View>
 
             <View style={styles.containerInputs}>
+            <Icon name={'ios-mail'} size={23} color={'#000'} style={{position: "absolute", marginTop: "8.5%"}}/>
             <TextInput
             style={styles.input}
-            placeholder="Digite seu email."
             value={this.state.email}
             onChangeText={email => this.setState ({ email }) }
-            placeholderTextColor="#000"
             >
             </TextInput>
             
-
+            <Icon name={'md-lock'} size={25} color={'#000'} style={{position: "absolute", marginTop: "38%"}}/>
             <TextInput 
             style={styles.input}
-            placeholder="Digite sua senha."
             value={this.state.password}
             onChangeText={password => this.setState ({ password }) }
-            placeholderTextColor="#000"
             secureTextEntry={true}
             >
             </TextInput>
@@ -273,32 +272,34 @@ class App extends Component {
       </View>
       
       <View style={styles.containerInputs}>
+        <Icon name={'ios-mail'} size={23} color={'#000'} style={{position: "absolute", marginTop: "8.5%"}}/>
         <TextInput
-        style={styles.input}
-        placeholder="Digite seu email."
+        style={styles.inputRegister}
+        placeholder="Digite um email válido."
         value={this.state.emailRegister}
         onChangeText={emailRegister => this.setState ({ emailRegister }) }
-        placeholderTextColor="#000"
+        placeholderTextColor="#919191"
         >
         </TextInput>
 
-
+        <Icon name={'md-lock'} size={25} color={'#000'} style={{position: "absolute", marginTop: "38%"}}/>
         <TextInput
-        style={styles.input}
-        placeholder="Digite sua senha."
+        style={styles.inputRegister}
+        placeholder="Digite uma senha."
         value={this.state.passwordRegister}
         onChangeText={passwordRegister => this.setState ({ passwordRegister }) }
-        placeholderTextColor="#000"
+        placeholderTextColor="#919191"
         secureTextEntry={true}
         >
         </TextInput>
 
+        <Icon name={'md-lock'} size={25} color={'#000'} style={{position: "absolute", marginTop: "67.5%"}}/>
         <TextInput
-        style={styles.input}
+        style={styles.inputRegister}
         placeholder="Confirme sua senha."
         value={this.state.passwordConfirm}
         onChangeText={passwordConfirm => this.setState ({ passwordConfirm }) }
-        placeholderTextColor="#000"
+        placeholderTextColor="#919191"
         secureTextEntry={true}
         >
         </TextInput>
@@ -344,6 +345,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 20,
     marginTop: 10,
+    paddingLeft: 25,
+  },
+  inputRegister: {
+    height: 45,
+    borderBottomColor: '#000',
+    borderBottomWidth: 2,
+    marginBottom: 20,
+    marginTop: 10,
+    paddingLeft: 25,
   },
   button: {
     height: 45,
@@ -357,9 +367,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOpacity: 0.5,
-    elevation: 6,
-    shadowRadius: 15 ,
-    shadowOffset : { width: 1, height: 13},
+    elevation: 6
   },
   buttonsRegister: {
     height: 10,
