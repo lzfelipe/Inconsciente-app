@@ -98,7 +98,7 @@ getData = async () => {
                             onChangeText={resposta => this.setState ({ resposta }) }>
                         </TextInput>
                         <TouchableOpacity style={styles.button} onPress={() => {this.checarResposta()}}>
-                            <Text style={styles.textDefault}>Guess</Text>
+                            <Text style={styles.textDefault}>Confirmar Resposta</Text>
                         </TouchableOpacity>
                         
                     </View>
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     },
     textDefault: {
         color: "#000",
+        fontFamily: "canela_roman"
     },
     input: {
         width: 200,
@@ -126,11 +127,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         marginBottom: 20,
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: "canela_roman"
       },
     button: {
         backgroundColor: "#fff", 
         padding: 15, 
-        borderRadius: 10
+        borderRadius: 10,
     }
 });

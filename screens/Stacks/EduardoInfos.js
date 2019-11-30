@@ -25,23 +25,26 @@ class EduardoInfos extends Component {
                     </View>
             </View>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: '#fff', fontSize: 28}}>Eduardo n sei o nome inteiro</Text>
+                <Text style={{color: '#fff', fontSize: 28, fontFamily: "Gilroy-Light", textAlign: 'center'}}>Eduardo Vieira</Text>
             </View>
 
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-                <Text style={{color: '#fff', fontSize: 20}}>vários anos </Text>
-                <Text style={{color: '#fff', fontSize: 20}}> um profissional</Text>
+                <Text style={{color: '#fff', fontSize: 20, fontFamily: "Gilroy-Light", textAlign: 'center'}}> 
+                20 anos
+                {"\n"} 
+                {"\n"} 
+                Detetive do departamento da polícia militar</Text>
             </View>
 
             <View style={{alignContent: 'center', marginHorizontal: 10}}>
-                <Text style={{color: '#fff', fontSize: 15, textAlign: 'justify', paddingBottom: 10}}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce commodo facilisis fermentum. Aliquam ullamcorper pulvinar commodo. Fusce et pellentesque ipsum. Donec molestie pellentesque consectetur. Ut venenatis, purus vitae facilisis feugiat, ipsum nisi aliquam purus, eu placerat massa ex id turpis. Integer vehicula tortor vitae luctus consectetur. Nunc mollis, lacus a accumsan pretium, dui enim viverra ipsum, sit amet convallis leo odio eget nisl. Mauris aliquam velit vitae ante sagittis dignissim. Sed tellus nisl, dictum quis dui laoreet, malesuada aliquam ex. Praesent iaculis condimentum efficitur. Donec porttitor elit id commodo finibus.
+                <Text style={{color: '#fff', fontSize: 15, textAlign: 'justify', paddingBottom: 10, fontFamily: "canela_roman"}}>
+                EDUARDO entrou na polícia militar com 18 anos, e sem seu primeiro ano de academia conheceu RODRIGO COSTA SOUZA, que se tornaram melhores amigos. EDUARDO não foi um aluno exemplar como RODRIGO durante a academia, sempre foi um aluno mediano, suas notas em testes físicos não eram boas como em seus testes de problemas dedutivos ou psicológicos. EDUARDO era uma pessoa dedicada, foi se aperfeiçoando ao mesmo tempo que estreitava uma amizade e confiança com RODRIGO, confiança e amizade essas que se fortaleceram mais com os seus anos como parceiros servindo como oficiais em seu departamento.
                 {"\n"}
                 {"\n"}
-                Integer neque diam, convallis eu arcu eu, ultricies molestie erat. Curabitur ac elit a lacus porttitor aliquam. Curabitur consectetur eros quis lorem bibendum, quis varius lectus scelerisque. Morbi vehicula cursus lectus sit amet consectetur. Pellentesque sagittis lectus turpis, sit amet posuere erat maximus at. Etiam a nulla quis lectus ultrices tincidunt. Nunc id mi eu eros bibendum consequat. Etiam arcu diam, auctor in sem quis, temddd dsadsadasdas
+                EDUARDO e RODRIGO trabalharam juntos por 4 anos, com o mesmo objetivo, de se tornarem Detetives do departamento de polícia militar, porem antes de alcançarem este objetivo, aos 20 anos RODRIGO é afastado da polícia devido a uma agressão a um detento recém apreendido, e EDUADO aos 24 anos, atinge seu cargo como Detetive. O contato de RODRIGO e EDUARDO se enfraqueceu durante este período, porem EDUARDO sempre manteve esse elo ligado.
                 {"\n"}
                 {"\n"}
-                Integer neque diam, convallis eu arcu eu, ultricies molestie erat. Curabitur ac elit a lacus porttitor aliquam. Curabitur consectetur eros quis lorem bibendum, quis varius lectus scelerisque. Morbi vehicula cursus lectus sit amet consectetur. Pellentesque sagittis lectus turpis, sit amet posuere erat maximus at. Etiam a nulla quis lectus ultrices tincidunt. Nunc id mi eu eros bibendum consequat. Etiam arcu diam, auctor in sem quis, temddd dsadsadasdas
+                EDUARDO sempre foi uma pessoa muito dedicada e segura de si, muito envolvido com seu trabalho e sua família, esposo e filha, sempre preocupado com as pessoas ao seu redor, desde a adolescência teve este senso do que era certo dentro de si.
                 {"\n"}
                 {"\n"}
                 </Text>

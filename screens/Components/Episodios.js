@@ -26,7 +26,7 @@ export default class Episodios extends Component {
                       <View style={{justifyContent: 'center' }}>
                             <Icon name={'md-albums'} size={25} color={'#fff'}/>
                         </View>
-                        <Text style={{fontSize: 20,fontWeight: '700', color: '#fff'}}>
+                        <Text style={{fontSize: 20, color: '#fff', fontFamily: "Gilroy-Light"}}>
                             {" "+this.props.coletados}/2
                         </Text>
                       </View>

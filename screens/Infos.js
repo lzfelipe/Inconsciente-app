@@ -12,7 +12,7 @@ class Infos extends Component {
 
                 <View style={styles.containerPersonagens}>
                     <StatusBar backgroundColor="#0d0d0d" />
-                        <Text style={{ fontSize: 32, fontWeight: '700', paddingHorizontal: 20, color: '#fff'}}>PERSONAGENS</Text>
+                        <Text style={{ fontSize: 32, paddingHorizontal: 20, color: '#fff', fontFamily: "Gilroy-ExtraBold"}}>PERSONAGENS</Text>
                 <ScrollView style={{marginTop: 20}} scrollEventThrottle={16}>
                 <View style={styles.containerButtons}>
 

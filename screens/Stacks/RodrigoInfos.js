@@ -3,10 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Image,
     StatusBar,
-    Dimensions,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -26,23 +24,27 @@ class RodrigoInfos extends Component {
                     </View>
             </View>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: '#fff', fontSize: 28}}>Rodrigo Costa Souza</Text>
+                <Text style={{color: '#fff', fontSize: 28, fontFamily: "Gilroy-Light"}}>Rodrigo Costa Souza</Text>
             </View>
 
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-                <Text style={{color: '#fff', fontSize: 20}}>25 anos </Text>
-                <Text style={{color: '#fff', fontSize: 20}}> Investigador</Text>
+                <Text style={{color: '#fff', fontSize: 20, fontFamily: "Gilroy-Light", textAlign: 'center'}}> 
+                    25 anos
+                    {"\n"} 
+                    {"\n"} 
+                    Investigador particular
+                </Text>
             </View>
 
             <View style={{alignContent: 'center', marginHorizontal: 10}}>
-                <Text style={{color: '#fff', fontSize: 15, textAlign: 'justify', paddingBottom: 10}}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce commodo facilisis fermentum. Aliquam ullamcorper pulvinar commodo. Fusce et pellentesque ipsum. Donec molestie pellentesque consectetur. Ut venenatis, purus vitae facilisis feugiat, ipsum nisi aliquam purus, eu placerat massa ex id turpis. Integer vehicula tortor vitae luctus consectetur. Nunc mollis, lacus a accumsan pretium, dui enim viverra ipsum, sit amet convallis leo odio eget nisl. Mauris aliquam velit vitae ante sagittis dignissim. Sed tellus nisl, dictum quis dui laoreet, malesuada aliquam ex. Praesent iaculis condimentum efficitur. Donec porttitor elit id commodo finibus.
+                <Text style={{color: '#fff', fontSize: 15, textAlign: 'justify', paddingBottom: 10, fontFamily: "canela_roman"}}>
+                RODRIGO COSTA SOUZA Está nas forças Policiais militares desde os 17 anos de idade, por influências de seu pai, que por sua vez era tenente coronel (RICARDO OLIVEIRA SOUZA), que sempre foi extremamente rígido com o filho, chegava a ser ditatorialista e abusivo. Através de treinamentos físicos e psicológicos, estudos rigorosos, foi direcionado sem muitas escolhas para o caminho da lei.
                 {"\n"}
                 {"\n"}
-                Integer neque diam, convallis eu arcu eu, ultricies molestie erat. Curabitur ac elit a lacus porttitor aliquam. Curabitur consectetur eros quis lorem bibendum, quis varius lectus scelerisque. Morbi vehicula cursus lectus sit amet consectetur. Pellentesque sagittis lectus turpis, sit amet posuere erat maximus at. Etiam a nulla quis lectus ultrices tincidunt. Nunc id mi eu eros bibendum consequat. Etiam arcu diam, auctor in sem quis, temddd dsadsadasdas
+                Desde cedo um prodígio, durante o ano da academia com ótimos resultados dos treinamentos físicos, teóricos, e em problemas investigativos. Aos 18 anos já atuava aptamente na força, e junto de seu parceiro que mais futuramente tornou-se também seu melhor amigo EDUARDO VIEIRA. Tinham resultados impressionantes de seus desempenhos que estavam cada vez melhores.
                 {"\n"}
                 {"\n"}
-                Integer neque diam, convallis eu arcu eu, ultricies molestie erat. Curabitur ac elit a lacus porttitor aliquam. Curabitur consectetur eros quis lorem bibendum, quis varius lectus scelerisque. Morbi vehicula cursus lectus sit amet consectetur. Pellentesque sagittis lectus turpis, sit amet posuere erat maximus at. Etiam a nulla quis lectus ultrices tincidunt. Nunc id mi eu eros bibendum consequat. Etiam arcu diam, auctor in sem quis, temddd dsadsadasdas
+                Aos seus 20 anos, após uma agressão a MARCELO CARDOZO FREITAS, ele foi afastado da força indefinidamente. Desde então passou a atuar como investigador particular, e depois de 2 anos e meio tratando seu TRANSTORNO EXPLOSIVO IMINENTE, passou a atuar também, como consultor da polícia em casos extremos de modo omitido da mídia.
                 {"\n"}
                 {"\n"}
                 </Text>

@@ -278,7 +278,7 @@ render() {
         <View style={styles.container}>
         <NavigationEvents onWillFocus={() => {  this.getTotal() }} />
             <View style={styles.main}>
-            <Text style={{fontSize: 18, textAlign: 'center', marginTop: 10, color: "#fff"}}>
+            <Text style={{fontSize: 20, textAlign: 'center', marginTop: 10, color: "#fff", fontFamily: "canela_roman"}}>
                 Você completou um total de {this.state.total} enigma(s) de 2 neste episódio.
                 </Text>
 
@@ -286,7 +286,7 @@ render() {
                 <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
                     <TextInput
                         style={styles.input}
-                        placeholder="Min."
+                        placeholder="0:00"
                         value={this.state.Item1Time}
                         onChangeText={Item1Time => this.setState ({ Item1Time }) }
                         placeholderTextColor="#fff"
@@ -306,7 +306,7 @@ render() {
                     <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
                     <TextInput
                         style={styles.input}
-                        placeholder="Min."
+                        placeholder="0:00"
                         value={this.state.Item2Time}
                         onChangeText={Item2Time => this.setState ({ Item2Time }) }
                         placeholderTextColor="#fff"
@@ -334,7 +334,7 @@ render() {
             onPress={() => {this.props.navigation.navigate('VideoUnblocked')}}
             style={{
                     display: this.state.displayVideo, padding: 20, 
-                    backgroundColor: '#000', 
+                    backgroundColor: '#8a66a2', 
                     alignSelf: 'center', 
                     marginBottom: 10, 
                     borderRadius: 10, 
@@ -378,7 +378,9 @@ const styles = StyleSheet.create({
         borderBottomColor: '#fff',
         borderBottomWidth: 2,
         marginBottom: 20,
-        color: '#fff'
+        color: '#fff',
+        fontSize: 15,
+        fontFamily: "canela_roman"
       },
     mistery: {
         

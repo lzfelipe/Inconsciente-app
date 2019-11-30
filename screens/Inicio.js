@@ -69,8 +69,8 @@ const Completed2 = await storage.load({
           <ScrollView
             scrollEventThrottle={16}
           >
-            <View style={{ flex: 1, paddingTop: 20 }}>
-              <Text style={{ fontSize: 34, fontWeight: '700', paddingHorizontal: 20, color: '#fff' }}>EPISÓDIOS</Text>
+            <View style={{ flex: 1, paddingTop: 28 }}>
+              <Text style={{ fontSize: 34, paddingHorizontal: 20, color: '#fff', fontFamily: "Gilroy-ExtraBold"}}>EPISÓDIOS</Text>
             </View>
             <View style={{ height: 300, marginTop: 20 }}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -129,6 +129,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `Piloto`,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
@@ -140,6 +150,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `Enigma 1`,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
@@ -150,6 +170,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `Enigma 2`,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
@@ -160,6 +190,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `?`,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#242626' },
         }),
@@ -194,6 +234,16 @@ const TabNavigator = createBottomTabNavigator({
         screen: RodrigoInfos,
         navigationOptions: () => ({
           headerShown: true,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           title: `Rodrigo`,
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#0d0d0d' },
@@ -205,6 +255,16 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: () => ({
           headerShown: true,
           title: `Eduardo`,
+          headerTitleStyle: {
+
+            fontWeight: '400',
+        
+            color: '#fff',
+
+            fontFamily: 'Gilroy-Light',
+        
+            fontSize: 22
+          },
           headerTintColor: '#fff',
           headerStyle: { backgroundColor: '#0d0d0d' },
         }),
@@ -252,6 +312,16 @@ const TabNavigator = createBottomTabNavigator({
     tabBarOptions: {
       keyboardHidesTabBar: true,
       activeBackgroundColor: '#000',
+
+      labelStyle: {
+
+        fontWeight: '400',
+  
+        fontFamily: 'Gilroy-Light',
+    
+        fontSize: 13
+      },
+      
       activeTintColor: '#fff',
       inactiveTintColor: '#000',
       style: {

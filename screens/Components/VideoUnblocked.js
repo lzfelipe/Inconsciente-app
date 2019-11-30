@@ -2,27 +2,31 @@ import React, { Component } from "react";
 import { 
     View,
     StyleSheet,
-    StatusBar
+    StatusBar,
+    Dimensions
 } from "react-native";
 import Video from 'react-native-video';
 const opening = require('../../assets/opening.mp4');
 
 class VideoUnblocked extends Component {
-    render() {
+
+     render() {
         return (
-            <View style={{flex: 1, backgroundColor: "#000"}}>
+            <View style={styles.container}>
+                <StatusBar backgroundColor="#000" />
+                <View style={{flex: 1, backgroundColor: "#000"}}>
                 <Video source={opening}   // Can be a URL or a local file.
-                ref={(ref) => {
-                    this.player = ref
-                }}                                      // Store reference
-                onBuffer={this.onBuffer}                // Callback when remote video is buffering
-                onError={this.videoError}               // Callback when video cannot be loaded
-                style={styles.backgroundVideo} 
-                controls={true}
-                paused={false}
-                resizeMode={"cover"}
-                fullscreen={true}
-                />
+                    ref={(ref) => {
+                        this.player = ref
+                    }}                                      // Store reference
+                    onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                    onError={this.videoError}               // Callback when video cannot be loaded
+                    style={styles.backgroundVideo} 
+                    controls={true}
+                    paused={true}
+                    resizeMode={'cover'}
+                    />
+                </View>
             </View>
         );
     }
@@ -35,11 +39,11 @@ const styles = StyleSheet.create({
     },
     backgroundVideo: {
         position: 'absolute',
-        rotation: 90,
-        height: 360,
-        width: 530,
-        top: 98,
-        left: -85,
+        transform: [{ rotate: '90deg'}],
+        height: Dimensions.get('window').height * 0.57,
+        width: Dimensions.get('window').width * 1.42,
+        top: Dimensions.get('window').height * 0.150,
+        left: Dimensions.get('window').width * -0.21,
         backgroundColor: '#000'
       },
 });

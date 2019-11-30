@@ -6,9 +6,9 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
-    Alert
+    Alert,
+    ScrollView
 } from "react-native";
-import { KeyboardAwareScrollView  } from 'react-native-keyboard-aware-scroll-view'
 import { NavigationEvents }  from 'react-navigation';
 
 
@@ -26,11 +26,11 @@ checarResposta = async () => {
     const fixedResp = resposta.toLowerCase()
     console.log(fixedResp)
 
-    if(fixedResp !== "ma") {
+    if(fixedResp !== "occidendum") {
         Alert.alert('Opss', "Resposta errada, continue tentando!")
     } else {
                 
-            if(fixedResp == "ma" && respondido == false) {
+            if(fixedResp == "occidendum" && respondido == false) {
                 await storage.save({
                     key: 'total2', 
                     data: {
@@ -41,17 +41,17 @@ checarResposta = async () => {
                 await storage.save({
                     key: 'enigma2', 
                     data: {
-                        resposta: 'ma',
+                        resposta: 'occidendum',
                         respondido: true
                     }
                 })
                 .then(ret => {
                     this.setState({respondido: true})
-                    this.setState({resposta: 'ma'})
+                    this.setState({resposta: 'occidendum'})
                     this.props.navigation.goBack()
                 })
 
-            } else if (fixedResp == "ma" && respondido == true) {
+            } else if (fixedResp == "occidendum" && respondido == true) {
                 this.props.navigation.goBack()
             }
         }
@@ -77,9 +77,13 @@ render() {
         return (
                 <View style={styles.container}>
                 <NavigationEvents onWillFocus={() => { this.getData() }} />
-                <KeyboardAwareScrollView>
+                <ScrollView scrollEventThrottle={16}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginVertical: 20}}>
-                        <Image style={{width: 340, height: 150, backgroundColor: "#aaa"}}></Image>
+                        <View style={{padding: 10}}>
+                            <Text selectable={true} selectionColor='#875db0' style={styles.textEnigma}>
+                            UGFyYWLDqW5zLCBqw6EgcXVlIHZvY8OqIGFjaG91IGVzc2Ugdm91IGZhY2lsaXRhciBkZXNzYSB2ZXogOykKCgoyMiBhbm9zLCBhcGFpeG9uYWRhIHBvciB1bWEgcGVzc29hIGUgcG9yIHVtYSBsw61uZ3VhIGrDoSBuw6NvIG1haXMgdml2YS4gVFVETyBmb2kgcm91YmFkbyBkZWxhIG5hcXVlbGEgbm9pdGUsIHR1ZG8gZm9pIHJvdWJhZG8gZGVsZSBuYXF1ZWxhIG5vaXRlIGUgdW0gbW9uc3RybyBuYXNjZXUgZG8gbWVkbywgZGEgw7NkaW8gZSBkYSB2aW5nYW7Dp2EuClZpb2xlbnRhbWVudGUgbyBmaW5vIGZpbyBkYSB2aWRhIGZvaSBlc3RyYcOnYWxoYWRvIGVtIHNlZ3VuZG9zIGludGVybWluw6F2ZWlzLgoKNDEuOTAyOSAxMi40NTM4IDQxIAoKQm9hIFNvcnRlLg==
+                            </Text>
+                        </View>
                         <TextInput
                             style={styles.input}
                             placeholder="Insira aqui sua resposta"
@@ -88,11 +92,12 @@ render() {
                             onChangeText={resposta => this.setState ({ resposta }) }>
                         </TextInput>
                         <TouchableOpacity style={styles.button} onPress={() => { this.checarResposta() }}>
-                            <Text style={styles.textDefault}>Guess</Text>
+                            <Text 
+                            style={styles.textDefault}>Confirmar resposta</Text>
                         </TouchableOpacity>
                         
                     </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 </View>
             
         );
@@ -108,6 +113,13 @@ const styles = StyleSheet.create({
     },
     textDefault: {
         color: "#000",
+        fontFamily: "canela_roman",
+    },
+    textEnigma: {
+        color: '#fff',
+        textAlign: 'justify',
+        fontFamily: "canela_roman",
+        fontSize: 18,
     },
     input: {
         width: 200,
@@ -115,7 +127,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         marginBottom: 20,
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: "canela_roman"
       },
     button: {
         backgroundColor: "#fff", 

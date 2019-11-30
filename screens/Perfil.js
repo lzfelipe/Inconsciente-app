@@ -3,30 +3,94 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Image,
+    ScrollView
 } from "react-native";
+import { NavigationEvents }  from 'react-navigation';
 import App from '../App'
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
 
 class Perfil extends Component {
+    state = {
+        ep1Total: 0,
+        email: this.props.screenProps.email,
+        uID: this.props.screenProps.uID,
+        errMessage: '',
+        isAuthenticated: this.props.screenProps.isAuthenticated,
+    }
+
+
+update = async () => {
+const storage = global.storage
+//CHECAGEM SE O PRIMEIRO ENIGMA FOI CONCLUIDO 
+const Completed1 = await storage.load({
+key: 'total1',
+})
+.then(ret => {
+    return ret.totalAmount
+})
+.catch(err => {
+
+    switch (err.name) {
+    case 'NotFoundError':
+        return 0;
+    }
+})
+
+//CHECAGEM SE O SEGUNDO ENIGMA FOI CONCLUIDO     
+const Completed2 = await storage.load({
+key: 'total2',
+})
+.then(ret => {
+    return ret.totalAmount
+})
+.catch(err => {
+
+    switch (err.name) {
+    case 'NotFoundError':
+        return 0;
+    }
+})
+
+//SOMA O TOTAL DE ENIGMAS CONCLUIDOS
+const DefTotal = Completed1 + Completed2
+return this.setState({ep1Total: DefTotal})
+}
+
     
     render() {
-        this.state = {
-            email: this.props.screenProps.email,
-            uID: this.props.screenProps.uID,
-            errMessage: '',
-            isAuthenticated: this.props.screenProps.isAuthenticated,
-        }
-
         if(this.state.isAuthenticated == true) {
         return (
             <View style={styles.container}>
-                <Text>Perfil</Text>
-                <Text>Email: {this.state.email}</Text>
-                <Text>UID: {this.state.uID}</Text>
+            <NavigationEvents onWillFocus={() => { this.update() }} />
+                <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
+                <ScrollView scrollEventThrottle={16}>
+                <View style={styles.containerCards}>
+                    <View style={{ flex: 1, marginHorizontal: 20, paddingTop: 28 }}>
+                    <Text style={{ fontSize: 30, color: '#fff', fontFamily: "Gilroy-ExtraBold"}}>INFORMAÇÕES DA SUA CONTA</Text>
+                    </View>
+                    <View style={{ height: "78%", marginTop: 0, paddingHorizontal: 20 }}>
+                        <Text style={styles.text}>Email: {this.state.email} {"\n"}</Text>
+                        <Text style={styles.text} >Seu id: {this.state.uID} {"\n"} </Text>
+                        <TouchableOpacity style={styles.buttonLogout} onPress={ () => {{  App.signOut()  }}  }>
+                                <Text style={styles.buttonText}>Sair</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonLogout} onPress={ () => {{  App.signOut()  }}  }>
-                     <Text style={styles.buttonText}>Sair</Text>
-                </TouchableOpacity>
+                        <View style={{marginVertical: 20}}>
+                        <Text style={{fontSize: 30, color: '#fff', fontFamily: "Gilroy-ExtraBold"}} >PROGRESSO {"\n"} </Text>
+                        <Icon 
+                            style={{position: "absolute", marginTop: '16.5%', marginLeft: '34%'}} name={'md-albums'} 
+                            size={50} 
+                            color={'#fff'}
+                        />
+                        <Text selectable={true} style={styles.textTotal}> {this.state.ep1Total}/10 </Text>
+                        </View>
+                    </View>
+                </View>
+                </ScrollView>
             </View>
             
         );
@@ -38,29 +102,49 @@ class Perfil extends Component {
 export default Perfil;
 
 const styles = StyleSheet.create({
+    containerCards: {
+    flex: 1,
+    marginTop: 20
+    },
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
-    }, 
+        alignContent: 'flex-start',
+        justifyContent: 'flex-start',
+        backgroundColor: '#0d0d0d'
+    },
+text: {
+        color: '#fff',
+        fontFamily: "canela_roman",
+        fontSize: 20,
+        textAlign:"left",
+        borderBottomWidth: 2,
+        borderColor: '#fff',
+        marginVertical: 7,
+    },
+    textTotal: {
+        color: '#fff',
+        fontFamily: "canela_roman",
+        fontSize: 25,
+        textAlign:"center",
+        marginTop: '-4%',
+        marginLeft: '15%'
+    },
     buttonLogout: {
         height: 45,
-        backgroundColor: '#b11113',
-        width: 200,
+        backgroundColor: '#fff',
+        width: 150,
         alignSelf: 'center',
-        marginTop: 10,
         textAlign: 'center',
+        marginTop: 10,
         justifyContent: "center",
         borderRadius: 5,
         alignItems: "center",
-        shadowColor: 'rgba(0, 0, 0, 0.3)',
-        shadowOpacity: 0.5,
-        elevation: 6,
-        shadowRadius: 15 ,
-        shadowOffset : { width: 1, height: 13},
       }, 
       buttonText: {
-        color: "#fff",
-        fontSize: 18
+        color: "#000",
+        fontSize: 25,
+        fontFamily: "canela_roman",
+        textAlignVertical: 'center'
       },
 });
