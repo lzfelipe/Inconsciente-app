@@ -7,7 +7,7 @@ class Infos extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
+                    <Image style={{ width: 205, height: 65, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
                 </View>
 
                 <View style={styles.containerPersonagens}>

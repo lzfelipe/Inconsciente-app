@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Perfil from './Perfil';
 import Infos from './Infos';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Onboard from './Components/Onboard';
 import Episodios from './Components/Episodios'
 import Episodio from './Episodio'
 import Enigma1 from './Stacks/Enigma1'
@@ -13,15 +14,37 @@ import RodrigoInfos from './Stacks/RodrigoInfos'
 import EduardoInfos from './Stacks/EduardoInfos'
 import VideoUnblocked from './Components/VideoUnblocked';
 import { createStackNavigator } from 'react-navigation-stack';
+
 const storage = global.storage
 
 export class Inicio extends Component {
   state = {
     ep1Total: 0,
     ep2Total: 0,
-    ep3Total: 0
+    ep3Total: 0,
+    firstLaunch: null
   }
 
+
+componentDidMount(){
+      storage.load({
+        key: 'firstlaunch'
+    }).then(ret => {
+      this.setState({firstLaunch: false});
+    }).catch(err => {
+      switch (err.name) {
+        case 'NotFoundError':
+          storage.save({
+            key: 'firstlaunch', // Note: Do not use underscore("_") in key!
+            data: {
+                launched: true
+            }
+        }).then(() => this.props.navigation.navigate('Onboard'))
+        this.setState({firstLaunch: true});
+        break;
+      }
+    })
+}
 
   update = async () => {
     //CHECAGEM SE O PRIMEIRO ENIGMA FOI CONCLUIDO 
@@ -60,56 +83,58 @@ const Completed2 = await storage.load({
   }
 
   render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="#0d0d0d" />
-        <NavigationEvents onWillFocus={() => { this.update() }} />
-        <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
-        <View style={styles.containerCards}>
-          <ScrollView
-            scrollEventThrottle={16}
-          >
-            <View style={{ flex: 1, paddingTop: 28 }}>
-              <Text style={{ fontSize: 34, paddingHorizontal: 20, color: '#fff', fontFamily: "Gilroy-ExtraBold"}}>EPISÓDIOS</Text>
-            </View>
-            <View style={{ height: 300, marginTop: 20 }}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      return (
+        <SafeAreaView style={styles.container}>
+          <StatusBar backgroundColor="#0d0d0d" />
+          <NavigationEvents onWillFocus={() => { this.update() }} />
+          <Image style={{ width: 205, height: 65, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
+          <View style={styles.containerCards}>
+            <ScrollView
+              scrollEventThrottle={16}
+            >
+              <View style={{ flex: 1, paddingTop: 28 }}>
+                <Text style={{ fontSize: 34, paddingHorizontal: 20, color: '#fff', fontFamily: "Gilroy-ExtraBold"}}>EPISÓDIOS</Text>
+              </View>
+              <View style={{ height: 300, marginTop: 20 }}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio', {coletados: this.state.ep1Total})}>
-                  <Episodios imageUri={require('../assets/ep1.jpg')} titulo={'1. Piloto'} coletados={this.state.ep1Total}
-                    onUpdate={() => this.update()}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Episodio', {coletados: this.state.ep1Total})}>
+                    <Episodios imageUri={require('../assets/ep1.jpg')} titulo={'1. Piloto'} coletados={this.state.ep1Total}
+                      onUpdate={() => this.update()}
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'2. Desconfiado'} coletados={'0'}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Episodios imageUri={require('../assets/locked.jpg')} titulo={'2. Desconfiado'} coletados={'0'}
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'3. Descobertas'} coletados={'0'}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Episodios imageUri={require('../assets/locked.jpg')} titulo={'3. Descobertas'} coletados={'0'}
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'4. Luta'} coletados={'0'}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Episodios imageUri={require('../assets/locked.jpg')} titulo={'4. Luta'} coletados={'0'}
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity>
-                  <Episodios imageUri={require('../assets/locked.jpg')} titulo={'5. O Inimigo'} coletados={'0'}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Episodios imageUri={require('../assets/locked.jpg')} titulo={'5. O Inimigo'} coletados={'0'}
+                    />
+                  </TouchableOpacity>
 
-              </ScrollView>
-            </View>
-          </ScrollView>
-        </View>
+                </ScrollView>
+              </View>
+            </ScrollView>
+          </View>
 
-      </SafeAreaView>
-    );
-  }
+        </SafeAreaView>
+      );
+    }
 }
+
+
 
 let navToggle = true;
 
@@ -122,8 +147,14 @@ const TabNavigator = createBottomTabNavigator({
           headerShown: false,
         }),
       },
-
-
+    
+      Onboard: {
+        screen: Onboard,
+        navigationOptions: () => ({
+          headerShown: false
+        }),
+      },
+      
       Episodio: {
         screen: Episodio,
         navigationOptions: () => ({
@@ -209,7 +240,6 @@ const TabNavigator = createBottomTabNavigator({
     {
       defaultNavigationOptions: ({ navigation }) => {
         const { routeName } = navigation.state;
-
         if (routeName == 'Inicio' ) {
           navToggle = true;
         } else {
@@ -276,7 +306,7 @@ const TabNavigator = createBottomTabNavigator({
     defaultNavigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state;
 
-      if (routeName === 'Informações') {
+      if (routeName === 'Inicio' || routeName === 'Informações' || routeName === 'Perfil') {
         navToggle = true;
       } else {
         navToggle = false;

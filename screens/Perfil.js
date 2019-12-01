@@ -66,7 +66,7 @@ return this.setState({ep1Total: DefTotal})
         return (
             <View style={styles.container}>
             <NavigationEvents onWillFocus={() => { this.update() }} />
-                <Image style={{ width: 200, height: 60, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
+                <Image style={{ width: 205, height: 65, marginTop: 20 }} source={require('../assets/logo.png')} ></Image>
                 <ScrollView scrollEventThrottle={16}>
                 <View style={styles.containerCards}>
                     <View style={{ flex: 1, marginHorizontal: 20, paddingTop: 28 }}>

@@ -226,53 +226,6 @@ async componentWillMount() {
     await this.getTotal()
 }
 
-removeData = async () => {
-    storage.remove({
-        key: 'item1Time'
-      }).then(() => {
-          this.setState({Item1Time: ''})
-          this.setState({Item1Check: false})
-          this.setState({ColorDefault: "#fff"})
-          this.setState({IconDefault: "md-arrow-dropright"})
-      });
-
-      storage.remove({
-        key: 'item2Time'
-      }).then(() => {
-          this.setState({Item2Time: ''})
-          this.setState({Item2Check: false})
-          this.setState({ColorDefault2: "#fff"})
-          this.setState({IconDefault2: "md-arrow-dropright"})
-      });
-
-      storage.remove({
-        key: 'total1'
-      }).then(() => {
-        this.setState({total: 0})
-      });
-
-      storage.remove({
-        key: 'total2'
-      }).then(() => {
-        this.setState({total: 0})
-      });
-
-      storage.remove({
-        key: 'enigma1'
-      }).then(() => {
-        this.setState({total: 0})
-      });
-
-      storage.remove({
-        key: 'enigma2'
-      }).then(() => {
-        this.setState({total: 0})
-      });
-
-}
-
-
-
 render() {
         return (
         <View style={styles.container}>
