@@ -10,7 +10,7 @@ import Storage from 'react-native-storage';
 import { NavigationEvents }  from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import Icone from './Components/Icone';
 
 const storage = new Storage({
     size: 1000,
@@ -111,7 +111,7 @@ getItem1 = async () => {
     .then(ret => {
         this.setState({Item1Time: ret.Item1Time})
         this.setState({Item1Check: ret.Item1Check})
-        this.setState({ColorDefault: "#8A66A2"})
+        this.setState({ColorDefault: "#44008a"})
         this.setState({IconDefault: 'md-checkmark-circle-outline'})
     })
     .catch(err => {
@@ -134,7 +134,7 @@ getItem2 = async () => {
     .then(ret => {
         this.setState({Item2Time: ret.Item2Time})
         this.setState({Item2Check: ret.Item2Check})
-        this.setState({ColorDefault2: "#8A66A2"})
+        this.setState({ColorDefault2: "#44008a"})
         this.setState({IconDefault2: 'md-checkmark-circle-outline'})
     })
     .catch(err => {
@@ -236,7 +236,7 @@ render() {
                 </Text>
 
                 <View style={styles.containerContent}>
-                <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
+                <Icone name="SortArrows" fill="#44008a" height="30" width="30" />
                     <TextInput
                         style={styles.input}
                         placeholder="0:00"
@@ -256,7 +256,7 @@ render() {
                 </View>
 
                 <View style={styles.containerContent}>
-                    <Icon name={'md-list-box'} size={40} color={'#8A66A2'}/>
+                <Icone name="SortArrows" fill="#44008a" height="30" width="30" />
                     <TextInput
                         style={styles.input}
                         placeholder="0:00"
@@ -287,7 +287,7 @@ render() {
             onPress={() => {this.props.navigation.navigate('VideoUnblocked')}}
             style={{
                     display: this.state.displayVideo, padding: 20, 
-                    backgroundColor: '#8a66a2', 
+                    backgroundColor: '#44008a', 
                     alignSelf: 'center', 
                     marginBottom: 10, 
                     borderRadius: 10, 

@@ -25,6 +25,7 @@
     "react-native-screens": "1.0.0-alpha.23",
     "react-native-storage": "^1.0.1",
     "react-native-svg": "^9.13.3",
+    "react-native-svg-icon": "^0.8.1",
     "react-native-vector-icons": "^6.6.0",
     "react-native-video": "4.x",
     "react-navigation": "^4.0.10",

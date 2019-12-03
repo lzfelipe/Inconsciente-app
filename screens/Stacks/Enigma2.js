@@ -80,7 +80,7 @@ render() {
                 <ScrollView scrollEventThrottle={16}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginVertical: 20}}>
                         <View style={{padding: 10}}>
-                            <Text selectable={true} selectionColor='#875db0' style={styles.textEnigma}>
+                            <Text selectable={true} selectionColor='#44008a' style={styles.textEnigma}>
                             UGFyYWLDqW5zLCBqw6EgcXVlIHZvY8OqIGFjaG91IGVzc2Ugdm91IGZhY2lsaXRhciBkZXNzYSB2ZXogOykKCgoyMiBhbm9zLCBhcGFpeG9uYWRhIHBvciB1bWEgcGVzc29hIGUgcG9yIHVtYSBsw61uZ3VhIGrDoSBuw6NvIG1haXMgdml2YS4gVFVETyBmb2kgcm91YmFkbyBkZWxhIG5hcXVlbGEgbm9pdGUsIHR1ZG8gZm9pIHJvdWJhZG8gZGVsZSBuYXF1ZWxhIG5vaXRlIGUgdW0gbW9uc3RybyBuYXNjZXUgZG8gbWVkbywgZGEgw7NkaW8gZSBkYSB2aW5nYW7Dp2EuClZpb2xlbnRhbWVudGUgbyBmaW5vIGZpbyBkYSB2aWRhIGZvaSBlc3RyYcOnYWxoYWRvIGVtIHNlZ3VuZG9zIGludGVybWluw6F2ZWlzLgoKNDEuOTAyOSAxMi40NTM4IDQxIAoKQm9hIFNvcnRlLg==
                             </Text>
                         </View>
