@@ -30,7 +30,7 @@ class EduardoInfos extends Component {
 
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
                 <Text style={{color: '#fff', fontSize: 20, fontFamily: "Gilroy-Light", textAlign: 'center'}}> 
-                20 anos
+                26 anos
                 {"\n"} 
                 {"\n"} 
                 Detetive do departamento da polícia militar</Text>
