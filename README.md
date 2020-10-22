@@ -15,4 +15,5 @@ Recomendável usar Yarn como package manager para evitar bugs.
 
 ## Outros links
 Veja o projeto mais detalhademente no [Behance.](https://www.behance.net/gallery/88931785/IN-CONSCIENTE)
+
 Piloto para websérie do projeto disponivel no [Youtube](https://www.youtube.com/watch?v=m8QZ1sUSa5c&feature=youtu.be)
