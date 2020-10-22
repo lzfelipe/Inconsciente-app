@@ -10,9 +10,7 @@ O aplicativo foi criado para um projeto da faculdade, onde a ídeia era produzir
 ![](https://i.imgur.com/V98NDnrm.jpg) ![](https://i.imgur.com/Sd9ICiam.jpg) ![](https://i.imgur.com/bYMDlfJm.jpg) ![](https://i.imgur.com/VuMHhY5m.jpg) 
 
 ## Outras telas
-![](https://i.imgur.com/imILHeZm.jpg)  ![](https://i.imgur.com/Rn5Wax5m.jpg)  ![](https://i.imgur.com/k1GsxIOm.jpg)  
-
-![](https://i.imgur.com/1bGWFc1m.jpg)  ![](https://i.imgur.com/xYqVXvjm.jpg)  
+![](https://i.imgur.com/imILHeZm.jpg)  ![](https://i.imgur.com/Rn5Wax5m.jpg)  ![](https://i.imgur.com/k1GsxIOm.jpg)  ![](https://i.imgur.com/1bGWFc1m.jpg)  ![](https://i.imgur.com/xYqVXvjm.jpg)  
 
 ## Depêndencias
 React native >= 0.59
