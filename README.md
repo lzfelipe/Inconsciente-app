@@ -11,6 +11,7 @@ O aplicativo foi criado para um projeto da faculdade, onde a ídeia era produzir
 
 ## Depêndencias
 React native >= 0.59
+
 Recomendável usar Yarn como package manager para evitar bugs.
 
 ## Outros links
